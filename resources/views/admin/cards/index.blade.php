@@ -5,9 +5,7 @@
 @section('actions')
     <div>
       <a class="btn btn-primary" href="{{ route('admin.cards.create') }}">Crea nuovo post</a>
-    </div>
-    <div>
-      <a class="btn btn-primary" href="{{ route('admin.cards.trash') }}">Cestino</a>
+      <a class="btn btn-secondary" href="{{ route('admin.cards.trash') }}">Cestino</a>
     </div>
 @endsection
 
