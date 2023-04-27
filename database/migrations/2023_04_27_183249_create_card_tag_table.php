@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('cards', function (Blueprint $table) {
-            $table->foreignId('category_id')->after('id')->nullable()->constrained()->nullOnDelete();
+        Schema::create('card_tag', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('card_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('tag_id')->constrained()->cascadeOnDelete();
         });
     }
 
@@ -25,9 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('cards', function (Blueprint $table) {
-            $table->dropForeign('cards_category_id_foreign');
-            $table->dropColumn('category_id');
-        });
+        Schema::dropIfExists('card_tag');
     }
 };

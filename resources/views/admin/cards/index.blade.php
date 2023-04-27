@@ -30,6 +30,9 @@
             <th>
               Categoria
             </th>
+            <th>
+              Tags
+            </th>
             <th scope="col"><a href="{{ route('admin.cards.index') }}?sort=text&order={{ $sort == 'text' && $order != 'DESC' ? 'DESC' : 'ASC' }}">Abstract
             @if ($sort == "text")
               <i class="bi bi-arrow-down d-inline-block  @if($order == 'DESC') rotate-180-my @endif"></i>
@@ -54,6 +57,13 @@
               <th scope="row">{{ $card->id }}</th>
               <td>{{ $card->title }}</td>
               <td>{{ $card->category?->label }}</td>
+              <td>
+                @forelse ($card->tags as $tag)
+                  {{ $tag->label }} @unless(!$loop->last), @endunless
+                @empty
+                  -
+                @endforelse
+              </td>
               <td>{{ $card->getAbstract(15) }}</td>
               <td>{{ $card->updated_at }}</td>
               <td>{{ $card->created_at }}</td>

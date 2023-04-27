@@ -25,7 +25,7 @@
     <div class="d-flex">
         @include('layouts.partials.navbar')
         <main class="container-fluid p-0">
-            <div class="d-flex justify-content-between align-items-center my-5">
+            <div class="d-flex justify-content-between align-items-center my-5 mx-5">
                 <h1 class="my-5">@yield('title')</h1>
 
                 @yield('actions')

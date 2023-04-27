@@ -14,10 +14,15 @@ class Card extends Model
 
     protected $fillable = ['category_id','title','image', 'text', 'is_published'];
 
+    
     public function category(){
         return $this->belongsTo(Category::class);
     }
-
+    
+    public function tags(){
+        return $this->belongsToMany(Tag::class);
+    }
+    
     public function getAbstract($max = 50){
         return substr($this->text, 0, $max) . "...";
     }

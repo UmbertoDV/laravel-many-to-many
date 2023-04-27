@@ -15,8 +15,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call([
-            CardSeeder::class,
             CategorySeeder::class,
+            CardSeeder::class,
+            TagSeeder::class,
+            CardTagSeeder::class,
             UserSeeder::class
         ]);
     }

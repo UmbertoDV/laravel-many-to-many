@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Card;
+use App\Models\Category;
 
 use Illuminate\Support\Str;
 
@@ -19,8 +20,12 @@ class CardSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
+        $categories = Category::all()->pluck('id');
+        $categories[] = null;
+        
         for($i = 0; $i < 40; $i++){
             $card = new Card;
+            $card->category_id = $faker->randomElement($categories);
             $card->title = $faker->catchPhrase();
             $card->slug = Str::of($card->title)->slug('-');
             // $card->image = $faker->imageUrl(640, 470, 'animals', true);
