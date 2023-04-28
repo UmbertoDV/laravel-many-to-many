@@ -12,4 +12,8 @@ class Tag extends Model
     public function cards(){
         return $this->belongsToMany(Card::class);
     }
+
+    public function getBadgeHTML(){
+        return '<span class="badge rounded-pill" style="background-color:' . $this->color . '"> ' . $this->label .'</span>';
+    }
 }

@@ -56,10 +56,10 @@
             <tr>
               <th scope="row">{{ $card->id }}</th>
               <td>{{ $card->title }}</td>
-              <td>{{ $card->category?->label }}</td>
+              <td>{!! $card->category?->getBadgeHTML() !!}</td>
               <td>
                 @forelse ($card->tags as $tag)
-                  {{ $tag->label }}, @unless(!$loop->last) @endunless
+                  {!! $tag->getBadgeHTML() !!}
                 @empty
                   -
                 @endforelse
@@ -74,6 +74,9 @@
               </td>
             </tr>
             @empty
+            <tr>
+              <td colspan="8">Nessun risultato</td>
+            </tr>
           @endforelse
         </tbody>
       </table>

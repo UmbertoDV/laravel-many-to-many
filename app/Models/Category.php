@@ -14,4 +14,8 @@ class Category extends Model
     public function cards(){
         return $this->hasMany(Card::class);
     }
+
+    public function getBadgeHTML(){
+        return '<span class="badge" style="background-color:' . $this->color . '"> ' . $this->label .'</span>';
+    }
 }

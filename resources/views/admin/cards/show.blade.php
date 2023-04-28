@@ -16,7 +16,25 @@
     <div class="card-body">
       <p>
         <strong>Categoria:</strong>
-        <span class="badge rounded-pill" style="background-color: {{ $card->category?->color }}">{{ $card->category?->label }}</span>
+        @if($card->category) 
+          {!! $card->category?->getBadgeHTML() !!}
+        @else 
+        Nessuna categoria
+        @endif
+      </p>
+      <p>
+        <strong>Tags:</strong>
+        @forelse($card->tags as $tag) 
+          {!! $tag->getBadgeHTML() !!}
+        @empty 
+          Nessun tag
+        @endforelse
+      </p>
+      <p>
+        <strong>Ultima modifica: </strong> {{ $card->updated_at }}
+      </p>
+      <p>
+        <strong>Creato il: </strong> {{ $card->created_at }}
       </p>
       <div>
         <strong>Testo:</strong>

@@ -186,7 +186,7 @@ class CardController extends Controller
 
         $sort = (!empty($sort_request = $request->get('sort'))) ? $sort_request : "updated_at";
         $order = (!empty($order_request = $request->get('order'))) ? $order_request : "DESC";
-        $cards = Card::onlyTrashed()->orderBy($sort, $order)->paginate(10)->withQueryString();
+        $cards = Card::onlyTrashed()->orderBy($sort, $order)->withQueryString()->paginate(10);
 
         return view('admin.cards.trash', compact('cards', 'sort', 'order'));
     }
@@ -202,6 +202,8 @@ class CardController extends Controller
         $card = Card::where('id', $id)->onlyTrashed()->first();
         $id_card = $card->id;
         if($card->image) Storage::delete($card->image);
+
+        $card->tags()->detach();
 
         $card->forceDelete();
 

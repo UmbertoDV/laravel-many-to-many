@@ -54,7 +54,7 @@
               <th scope="row">{{ $category->id }}</th>
               <td>{{ $category->label }}</td>
               <td>{{ $category->color }}</td>
-              <td><span class="badge rounded-pill" style="background-color: {{ $category->color }}">{{ $category->label }}</span></td>
+              <td>{!! $category->getBadgeHTML() !!}</td>
               <td>{{ $category->updated_at }}</td>
               <td>{{ $category->created_at }}</td>
               <td>
@@ -64,6 +64,9 @@
               </td>
             </tr>
             @empty
+            <tr>
+              <td colspan="7">Nessun risultato</td>
+            </tr>
           @endforelse
         </tbody>
       </table>
