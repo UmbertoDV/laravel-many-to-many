@@ -84,6 +84,8 @@ class CardController extends Controller
         $card->fill($data);
         $card->slug = Card::generateSlug($card->title);
         $card->save();
+
+        if(Arr::exists($data, 'tags')) $card->tags()->attach($data['tags']);
         
         return to_route('admin.cards.show', $card)->with('message_content', "Card $card->id creata con successo");
     }
