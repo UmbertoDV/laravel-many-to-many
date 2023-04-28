@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Card;
 use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
@@ -37,7 +38,9 @@ class CardController extends Controller
     {
         $card = new Card;
         $categories = Category::orderBy('label')->get();
-        return view('admin.cards.form', compact('card', 'categories'));
+        $tags = Tag::orderBy('label')->get();
+        // $card_tags = [];
+        return view('admin.cards.form', compact('card', 'categories', 'tags'));
     }
 
     /**
@@ -54,6 +57,7 @@ class CardController extends Controller
             'image' => 'nullable|image|mimes:jpg,png,jpeg',
             'is_published' => 'boolean',
             'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|exists:tags,id',
         ],
         [
             'title.required' => 'Il titolo è obbligatorio',
@@ -64,6 +68,7 @@ class CardController extends Controller
             'image.image' => 'Il file caricato deve essere un\'image',
             'image.mimes' => 'Disponibili solo jpg, png e jpeg',
             'category_id.exists' => 'L\'id della categoria non è valido',
+            'tags.exists' => 'I tags non sono validi',
             ]
         );
         
@@ -103,7 +108,9 @@ class CardController extends Controller
     public function edit(Card $card)
     {
         $categories = Category::orderBy('label')->get();
-        return view('admin.cards.form', compact('card', 'categories'));
+        $tags = Tag::orderBy('label')->get();
+        $card_tags = $card->tags->pluck('id')->toArray();
+        return view('admin.cards.form', compact('card', 'categories', 'tags', 'card_tags'));
     }
 
     /**
@@ -121,6 +128,7 @@ class CardController extends Controller
             'image' => 'nullable|image|mimes:jpg,png,jpeg',
             'is_published' => 'boolean',
             'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|exists:tags,id',
         ],
         [
             'title.required' => 'Il titolo è obbligatorio',
@@ -131,6 +139,7 @@ class CardController extends Controller
             'image.image' => 'Il file caricato deve essere un\'image',
             'image.mimes' => 'Disponibili solo jpg, png e jpeg',
             'category_id.exists' => 'L\'id della categoria non è valido',
+            'tags.exists' => 'I tags non sono validi',
         ]
     );
 
@@ -145,6 +154,8 @@ class CardController extends Controller
     };
 
     $card->update($data);
+    if(Arr::exists($data, 'tags')) $card->tags()->sync($data['tags']);
+    else $card->tags()->detach();
 
     return to_route('admin.cards.show', $card)
         ->with('message_content', "Card $card->id modificata con successo");

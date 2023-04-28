@@ -59,7 +59,7 @@
               <td>{{ $card->category?->label }}</td>
               <td>
                 @forelse ($card->tags as $tag)
-                  {{ $tag->label }} @unless(!$loop->last), @endunless
+                  {{ $tag->label }}, @unless(!$loop->last) @endunless
                 @empty
                   -
                 @endforelse

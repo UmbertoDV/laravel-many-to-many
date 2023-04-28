@@ -53,6 +53,21 @@
       </div>
 
       <div class="col-4 mb-3">
+        <label for="category_id" class="form-label">Tags:</label> <br>
+        <div class="form-check @error('tags') is-invalid @enderror p-0">
+          @foreach($tags as $tag)
+            <input type="checkbox" id="tag-{{ $tag->id }}" value="{{ $tag->id }}" name="tags[]" class="form-check-control" @if(in_array($tag->id, old('tags', $card_tags ?? []))) checked @endif>
+            <label for="tag-{{ $tag->id }}">{{ $tag->label }}</label> <br>
+          @endforeach
+        </div>
+          @error('tags')
+            <div class="invalid-feedback">
+              {{ $message }}
+            </div>
+          @enderror
+      </div>
+
+      <div class="col-4 mb-3">
         <label for="is_published" class="form-label">Pubblicato</label>
         <input type="checkbox" name="is_published" id="is_published" class="form-check-control @error('is_published') is-invalid @enderror" @checked(old('is_published', $card->is_published)) value="1">
         @error('is_published')
