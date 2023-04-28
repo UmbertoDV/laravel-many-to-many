@@ -19,11 +19,11 @@ class CardTagSeeder extends Seeder
      */
     public function run(Faker $faker)
     {
-        $tags = Tag::all()->pluck('id');
+        $cards = Card::all();
+        $tags = Tag::all()->pluck('id')->toArray();
 
-        for($i = 1; $i > 40; $i++){
-            $card = Card::find($i);
-            $card->tags()->attach($faker->randomElements($tags, 3));
+        foreach($cards as $card) {
+            $card->tags()->attach($faker->randomElements($tags, random_int(0, 3)));
         }
     }
 }

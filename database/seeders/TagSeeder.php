@@ -19,10 +19,10 @@ class TagSeeder extends Seeder
         $labels = ["HTML", "CSS", "SQL", "Javascript", "PHP", "GIT", "Blade"];
 
         foreach($labels as $label){
-            $category = new Tag();
-            $category->label = $label;
-            $category->color = $faker->hexColor();
-            $category->save();
+            $tag = new Tag();
+            $tag->label = $label;
+            $tag->color = $faker->hexColor();
+            $tag->save();
         }
     }
 }
